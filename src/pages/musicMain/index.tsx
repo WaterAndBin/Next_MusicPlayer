@@ -1,10 +1,17 @@
 import Image from 'next/image';
-import { type ReactNode } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import './musicMain.scss';
 import Progress from './Progress';
 import MusicLists from './MusicLists';
+import type { MusicListsRef } from '@/types/components/MusicLists';
+import Voice from './Voice';
 
 function MusicMain(): ReactNode {
+  /* dom */
+  const musicListsRef = useRef<MusicListsRef>(null);
+  const voiceRef = useRef<MusicListsRef>(null);
+  const [status, setStatus] = useState<boolean>(false);
+
   /**
    * 按钮宽度
    */
@@ -13,6 +20,8 @@ function MusicMain(): ReactNode {
    * 按钮高度
    */
   const buttonHeight: number = 20;
+
+  console.log('musicMain渲染了');
 
   return (
     <main className="flex-default h-screen w-screen">
@@ -40,11 +49,19 @@ function MusicMain(): ReactNode {
           </div>
           {/* 列表按钮 */}
           <div className="flex flex-[0.1] justify-center">
-            <Image src="/svg/lists.svg" alt="lists" width={buttonWidth} height={buttonHeight} priority></Image>
+            <Image
+              src="/svg/lists.svg"
+              onClick={() => setStatus(!status)}
+              alt="lists"
+              width={buttonWidth}
+              height={buttonHeight}
+              priority
+            ></Image>
           </div>
         </div>
       </div>
-      <MusicLists></MusicLists>
+      <MusicLists ref={musicListsRef}></MusicLists>
+      <Voice ref={voiceRef}></Voice>
     </main>
   );
 }
