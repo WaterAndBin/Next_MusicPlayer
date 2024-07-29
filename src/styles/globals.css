@@ -29,7 +29,7 @@
 /* 滚动条滑块样式 */  
 .scroll-container::-webkit-scrollbar-thumb {  
   cursor: pointer;
-  background-color: #888; /* 滑块颜色 */  
+  background-color: #252525; /* 滑块颜色 */  
   border-radius: 10px; /* 滑块边角圆滑度 */  
   border: 2px solid transparent; /* 滑块边框（如果需要的话） */  
   background-clip: content-box; /* 确保边框不影响滑块大小 */  

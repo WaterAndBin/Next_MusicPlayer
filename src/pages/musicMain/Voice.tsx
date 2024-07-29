@@ -12,7 +12,7 @@ const Voice = React.memo(
     return (
       <div
         style={{ opacity: props.status ? '1 ' : '0', transform: `translate(${props.status ? '0,0' : '-8%,0'})` }}
-        className="scroll-container ml-2 h-36 w-40 origin-top-left overflow-y-auto overflow-x-hidden rounded-lg border-4 border-solid border-black transition-all duration-[270ms]"
+        className="scroll-container absolute -right-44 -top-1 ml-2 h-36 w-40 origin-top-left overflow-y-auto overflow-x-hidden rounded-lg border-4 border-solid border-black transition-all duration-[270ms]"
       >
         <div>音量</div>
       </div>
