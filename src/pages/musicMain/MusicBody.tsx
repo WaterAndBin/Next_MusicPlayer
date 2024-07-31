@@ -1,10 +1,11 @@
 import Image from 'next/image';
-import { useRef, useState, type ReactNode } from 'react';
+import { useContext, useRef, useState, type ReactNode } from 'react';
 import './musicMain.scss';
 import Progress from './Progress';
 import MusicLists from './MusicLists';
 import type { MusicListsRef } from '@/types/components/MusicLists';
 import Voice from './Voice';
+import { AudioContext } from '.';
 
 interface Status {
   voiceStatus: boolean;
@@ -13,10 +14,12 @@ interface Status {
 
 const statusData: Status = {
   voiceStatus: false,
-  listsStatus: false
+  listsStatus: true
 };
 
 function MusicBody(): ReactNode {
+  const audio = useContext(AudioContext);
+
   /* dom */
   const musicListsRef = useRef<MusicListsRef>(null);
   const voiceRef = useRef<MusicListsRef>(null);
@@ -82,9 +85,9 @@ function MusicBody(): ReactNode {
     <div className="relative flex h-36 w-60 select-none flex-col rounded-lg border-4 border-solid border-black p-[0.4rem]">
       <div className="flex-[0.3]">
         <div className="truncate text-xl font-semibold" title="最佳损友asdasdasdasd">
-          最佳损友
+          {audio?.title == '' ? '暂无音乐' : audio?.title}
         </div>
-        <div className="text-sm font-semibold text-[#706f6f]">陈奕迅</div>
+        <div className="text-sm font-semibold text-[#706f6f]"> {audio?.singer == '' ? '无' : audio?.singer}</div>
       </div>
       {/* 进度 */}
       <div className="flex w-full flex-[0.55] items-center">
@@ -104,9 +107,39 @@ function MusicBody(): ReactNode {
         </div>
         {/* 播放按钮 */}
         <div className="flex flex-[0.8] justify-center">
-          <Image src="/svg/prev.svg" alt="prev" width={buttonWidth - 6} height={buttonHeight - 6} priority className="mr-2"></Image>
-          <Image src="/svg/stop.svg" alt="stop" width={buttonWidth} height={buttonHeight} priority></Image>
-          <Image src="/svg/next.svg" alt="next" width={buttonWidth - 6} height={buttonHeight - 6} priority className="ml-2"></Image>
+          <Image
+            onClick={() => audio?.prevSongs()}
+            src="/svg/prev.svg"
+            alt="prev"
+            width={buttonWidth - 6}
+            height={buttonHeight - 6}
+            priority
+            className="mr-2"
+          ></Image>
+          {audio?.isPlaying && (
+            <Image onClick={() => audio?.playOrStop()} src="/svg/stop.svg" alt="stop" width={buttonWidth} height={buttonHeight} priority></Image>
+          )}
+          {!audio?.isPlaying && (
+            <Image
+              onClick={() => {
+                audio?.playOrStop();
+              }}
+              src="/svg/play.svg"
+              alt="play"
+              width={buttonWidth}
+              height={buttonHeight}
+              priority
+            ></Image>
+          )}
+          <Image
+            onClick={() => audio?.nextSongs()}
+            src="/svg/next.svg"
+            alt="next"
+            width={buttonWidth - 6}
+            height={buttonHeight - 6}
+            priority
+            className="ml-2"
+          ></Image>
         </div>
         {/* 列表按钮 */}
         <div className="flex flex-[0.1] justify-center">

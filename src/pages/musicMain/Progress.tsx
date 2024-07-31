@@ -4,7 +4,6 @@ import { forwardRef, type ReactNode } from 'react';
 const Progress = React.memo(
   forwardRef((props, _): ReactNode => {
     console.log('Progress渲染了');
-    console.log(props);
 
     return (
       <div className="w-full">
