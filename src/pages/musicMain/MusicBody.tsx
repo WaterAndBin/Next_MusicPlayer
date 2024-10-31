@@ -13,8 +13,8 @@ interface Status {
 }
 
 const statusData: Status = {
-  voiceStatus: false,
-  listsStatus: true
+  voiceStatus: true,
+  listsStatus: false
 };
 
 function MusicBody(): ReactNode {
